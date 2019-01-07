@@ -1,16 +1,19 @@
 package org.nico.ratel.landlords.client.event;
 
-import org.nico.ratel.landlords.entity.ClientTransferData;
+import java.util.Map;
+
+import org.nico.ratel.landlords.helper.MapHelper;
 import org.nico.ratel.landlords.print.SimplePrinter;
 
 import io.netty.channel.Channel;
 
-public class ClientEventListener_CODE_GAME_OVER extends ClientEventListener<String>{
+public class ClientEventListener_CODE_GAME_OVER extends ClientEventListener{
 
 	@Override
-	public void call(Channel channel, ClientTransferData<String> clientTransferData) {
-		SimplePrinter.println("Game over");
-		
+	public void call(Channel channel, String data) {
+		Map<String, Object> map = MapHelper.parser(data);
+		SimplePrinter.printNotice("\nPlayer " + map.get("winnerNickname") + "[" + map.get("winnerType") + "]" + " won the game");
+		SimplePrinter.printNotice("Game over, friendship first, competition second\n");
 	}
 
 }

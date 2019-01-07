@@ -1,8 +1,6 @@
 package org.nico.ratel.landlords.enums;
 
-import java.io.Serializable;
-
-public enum ClientStatus implements Serializable{
+public enum ClientStatus{
 
 	TO_CHOOSE,
 	
@@ -13,6 +11,8 @@ public enum ClientStatus implements Serializable{
 	WAIT,
 	
 	CALL_LANDLORD,
+	
+	PLAYING
 	
 	
 }

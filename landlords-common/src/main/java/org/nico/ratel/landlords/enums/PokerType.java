@@ -1,13 +1,11 @@
 package org.nico.ratel.landlords.enums;
 
-import java.io.Serializable;
-
 /**
  * Poker type Spade、 Heart、 Diamond、 Club
  * 
  * @author nico
  */
-public enum PokerType implements Serializable{
+public enum PokerType{
 
 	BLANK(" "),
 	

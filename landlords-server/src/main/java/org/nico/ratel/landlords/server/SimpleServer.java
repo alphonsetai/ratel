@@ -1,8 +1,11 @@
 package org.nico.ratel.landlords.server;
 
 import java.net.InetSocketAddress;
+import java.util.Timer;
 
+import org.nico.ratel.landlords.print.SimplePrinter;
 import org.nico.ratel.landlords.server.handler.DefaultChannelInitializer;
+import org.nico.ratel.landlords.server.timer.RoomClearTask;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -14,19 +17,33 @@ public class SimpleServer {
 
 	public static void main(String[] args) throws InterruptedException {
 		
-		EventLoopGroup group = new NioEventLoopGroup();
+		if(args != null && args.length > 1) {
+			if(args[0].equalsIgnoreCase("-p") || args[0].equalsIgnoreCase("-port")) {
+				ServerContains.port = Integer.valueOf(args[1]);
+			}
+		}
 		
+		EventLoopGroup parentGroup = new NioEventLoopGroup();
+		EventLoopGroup childGroup = new NioEventLoopGroup();
 		try {
-			ServerBootstrap b = new ServerBootstrap()
-			.group(group)
+			ServerBootstrap bootstrap = new ServerBootstrap()
+			.group(parentGroup, childGroup)
 			.channel(NioServerSocketChannel.class)
-			.localAddress(new InetSocketAddress(ServerContains.PORT))
+			.localAddress(new InetSocketAddress(ServerContains.port))
 			.childHandler(new DefaultChannelInitializer());
 			
-			ChannelFuture f = b.bind().sync();
+			ChannelFuture f = bootstrap .bind().sync();
+			
+			SimplePrinter.serverLog("The server was successfully started on port " + ServerContains.port);
+			
+			ServerContains.THREAD_EXCUTER.execute(() -> {
+				Timer timer=new Timer();
+				timer.schedule(new RoomClearTask(), 0L, 3000L);
+			});
 			f.channel().closeFuture().sync();
 		} finally {
-			group.shutdownGracefully().sync();
+			parentGroup.shutdownGracefully();
+			childGroup.shutdownGracefully();
 		}
 		
 		

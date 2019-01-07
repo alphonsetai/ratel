@@ -1,8 +1,6 @@
 package org.nico.ratel.landlords.enums;
 
-import java.io.Serializable;
-
-public enum SellType implements Serializable{
+public enum SellType {
 
 	ILLEGAL("非合法"),
 	
@@ -16,13 +14,13 @@ public enum SellType implements Serializable{
 	
 	THREE("三张牌"),
 	
-	THREE_ZONES_A("三带一"),
+	THREE_ZONES_SINGLE("三带单"),
 	
-	THREE_ZONES_TWO("三带二"),
+	THREE_ZONES_DOUBLE("三带对"),
 	
-	FOUR_ZONES_A("四带一"),
+	FOUR_ZONES_SINGLE("四带单"),
 	
-	FOUR_ZONES_TWO("四带二"),
+	FOUR_ZONES_DOUBLE("四带对"),
 	
 	SINGLE_STRAIGHT("单顺子"),
 	

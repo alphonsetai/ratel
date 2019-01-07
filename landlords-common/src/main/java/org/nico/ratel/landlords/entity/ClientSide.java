@@ -1,16 +1,14 @@
 package org.nico.ratel.landlords.entity;
 
-import java.io.Serializable;
 import java.util.List;
 
+import org.nico.ratel.landlords.enums.ClientRole;
 import org.nico.ratel.landlords.enums.ClientStatus;
 import org.nico.ratel.landlords.enums.ClientType;
 
 import io.netty.channel.Channel;
 
-public class ClientSide implements Serializable{
-
-	private static final long serialVersionUID = -1208782543528394339L;
+public class ClientSide{
 
 	private int id;
 	
@@ -21,6 +19,8 @@ public class ClientSide implements Serializable{
 	private List<Poker> pokers;
 	
 	private ClientStatus status;
+	
+	private ClientRole role;
 	
 	private ClientType type;
 	
@@ -45,6 +45,14 @@ public class ClientSide implements Serializable{
 		type = null;
 		next = null;
 		pre = null;
+	}
+
+	public final ClientRole getRole() {
+		return role;
+	}
+
+	public final void setRole(ClientRole role) {
+		this.role = role;
 	}
 
 	public final String getNickname() {
@@ -117,6 +125,28 @@ public class ClientSide implements Serializable{
 
 	public final void setPre(ClientSide pre) {
 		this.pre = pre;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ClientSide other = (ClientSide) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 
 }
